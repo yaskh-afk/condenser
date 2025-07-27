@@ -173,7 +173,11 @@ class UnionFind:
         return retval
 
 def mysql_db_name_hack(target, conn):
-    if not isinstance(conn, MySqlConnection) or '.' not in  target:
+    # For PostgreSQL, always return the table name as-is
+    if config_reader.get_db_type() == 'postgres':
+        return target
+    # For MySQL, add database name prefix if needed
+    elif not isinstance(conn, MySqlConnection) or '.' not in target:
         return target
     else:
         return conn.db_name + '.' + table_name(target)

@@ -1,0 +1,20 @@
+table_name                         |row_count|
+-----------------------------------+---------+
+auth_group                         |        0|
+auth_group_permissions             |        0|
+authtoken_token                    |        0|
+calendar_event                     |        0|
+calendar_relation                  |        0|
+django_admin_log                   |        0|
+easy_thumbnails_thumbnaildimensions|        0|
+health_check_db_testmodel          |        0|
+lokafyer_contact                   |        0|
+lokafyer_stats                     |        0|
+ranking                            |        0|
+transaction                        |        0|
+transaction_detail                 |        0|
+traveler_contact                   |        0|
+user_groups                        |        0|
+user_permission                    |        0|
+user_profile_traveler_languages    |        0|
+user_user_permissions              |        0|

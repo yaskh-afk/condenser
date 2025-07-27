@@ -1,0 +1,83 @@
+SELECT *
+FROM (
+    SELECT t.table_name,
+           (
+             xpath('/row/cnt/text()',
+                   query_to_xml(
+                     format('SELECT COUNT(*) AS cnt FROM %I.%I',
+                            t.table_schema, t.table_name),
+                     false, true, ''
+                   )
+             )
+           )[1]::text::int AS row_count
+    FROM information_schema.tables t
+    WHERE t.table_schema = 'public'
+      AND t.table_type = 'BASE TABLE'
+) AS counts
+WHERE counts.row_count = 0
+ORDER BY counts.table_name;
+
+
+table_name                            |row_count|
+--------------------------------------+---------+
+auth_group                            |        0|
+auth_group_permissions                |        0|
+auth_permission                       |        0|
+authtoken_token                       |        0|
+booking_languages                     |        0|
+booking_lokafyer_relevancy            |        0|
+booking_lokafyer_response             |        0|
+bookings_bookingevent                 |        0|
+bookings_bookinglokafyerrelevancyevent|        0|
+bookings_bookinglokafyerresponseevent |        0|
+bookings_smscategory                  |        0|
+bookings_smstemplate                  |        0|
+calendar_event                        |        0|
+calendar_relation                     |        0|
+cities_cityevent                      |        0|
+city_image                            |        0|
+contact_us                            |        0|
+countries_countryevent                |        0|
+django_admin_log                      |        0|
+django_migrations                     |        0|
+django_session                        |        0|
+easy_thumbnails_source                |        0|
+easy_thumbnails_thumbnail             |        0|
+easy_thumbnails_thumbnaildimensions   |        0|
+health_check_db_testmodel             |        0|
+internal_transaction                  |        0|
+languages_languageevent               |        0|
+languages_lokafyerlanguageevent       |        0|
+lokafyer_city                         |        0|
+lokafyer_contact                      |        0|
+lokafyer_feedback                     |        0|
+lokafyer_feedback_image               |        0|
+lokafyer_language                     |        0|
+lokafyer_payment_details              |        0|
+lokafyer_stats                        |        0|
+lokafyers_lokafyerpaymentdetailsevent |        0|
+partners_partneraccountevent          |        0|
+partners_partnerevent                 |        0|
+payment_method                        |        0|
+payment_method_countries              |        0|
+pghistory_context                     |        0|
+products_productevent                 |        0|
+ranking                               |        0|
+request_token_requesttokenlog         |        0|
+transaction                           |        0|
+transaction_detail                    |        0|
+traveler_contact                      |        0|
+traveler_review_image                 |        0|
+traveler_reviews                      |        0|
+user_groups                           |        0|
+user_login_activity                   |        0|
+user_permission                       |        0|
+user_profile_lokafyer                 |        0|
+user_profile_lokafyer_languages       |        0|
+user_profile_traveler                 |        0|
+user_profile_traveler_languages       |        0|
+user_user_permissions                 |        0|
+users_apiaccesstoken                  |        0|
+users_lokafyerprofileevent            |        0|
+users_lokafyteammemberprofileevent    |        0|
+users_userevent                       |        0|

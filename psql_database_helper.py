@@ -175,7 +175,7 @@ def get_table_columns(table, schema, conn):
 
 def list_all_user_schemas(conn):
     with conn.cursor() as cur:
-        cur.execute("SELECT nspname FROM pg_catalog.pg_namespace WHERE nspname NOT LIKE 'pg\_%' and nspname != 'information_schema';")
+        cur.execute("SELECT nspname FROM pg_catalog.pg_namespace WHERE nspname NOT LIKE 'pg\\_%' and nspname != 'information_schema';")
         return [r[0] for r in cur.fetchall()]
 
 def list_all_tables(db_connect):

@@ -84,14 +84,19 @@ class PsqlDatabaseCreator:
 
             os.chdir(cur_path)
 
-            self.run_psql(result.stdout.decode('utf-8'))
+            post_data_sql = self.__filter_commands(result.stdout.decode('utf-8'))
+            self.run_psql(post_data_sql)
 
     def __filter_commands(self, input):
 
         input = input.split('\n')
         filtered_key_words = [
             'COMMENT ON CONSTRAINT',
-            'COMMENT ON EXTENSION'
+            'COMMENT ON EXTENSION',
+            'SET transaction_timeout',
+            'SET statement_timeout',
+            'SET lock_timeout',
+            'SET idle_in_transaction_session_timeout'
         ]
 
         retval = []
