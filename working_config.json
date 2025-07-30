@@ -1,0 +1,183 @@
+{
+    "initial_targets": [
+        {
+            "table": "public.email_data",
+            "percent": 2
+        },
+        {
+            "table": "public.user_permission",
+            "percent": 10
+        },
+        {
+            "table": "public.booking_notes",
+            "percent": 10
+        },
+        {
+            "table": "public.booking",
+            "percent": 10
+        },
+        {
+            "table": "public.user",
+            "percent": 10
+        },
+        {
+            "table": "public.city",
+            "percent": 10
+        },
+        {
+            "table": "public.country",
+            "percent": 20
+        },
+        {
+            "table": "public.language",
+            "percent": 30
+        },
+        {
+            "table": "public.product",
+            "percent": 15
+        },
+        {
+            "table": "public.partner",
+            "percent": 20
+        },
+        {
+            "table": "public.partner_account",
+            "percent": 20
+        },
+        {
+            "table": "public.payment_method",
+            "percent": 10
+        },
+        {
+            "table": "public.user_profile_lokafyer",
+            "percent": 15
+        },
+        {
+            "table": "public.user_profile_traveler",
+            "percent": 10
+        },
+        {
+            "table": "public.lokafyer_feedback",
+            "percent": 10
+        },
+        {
+            "table": "public.traveler_reviews",
+            "percent": 10
+        },
+        {
+            "table": "public.transaction",
+            "percent": 10
+        },
+        {
+            "table": "public.transaction_detail",
+            "percent": 10
+        },
+        {
+            "table": "public.email_template",
+            "percent": 10
+        },
+        {
+            "table": "public.email_batch",
+            "percent": 10
+        },
+        {
+            "table": "public.bookings_smscategory",
+            "percent": 10
+        },
+        {
+            "table": "public.bookings_smstemplate",
+            "percent": 20
+        },
+        {
+            "table": "public.calendar_event",
+            "percent": 10
+        },
+        {
+            "table": "public.auth_group",
+            "percent": 30
+        },
+        {
+            "table": "public.auth_permission",
+            "percent": 10
+        },
+        {
+            "table": "public.lokafy_team_member_profile",
+            "percent": 20
+        }
+        
+    ],
+    "db_type": "postgres",
+    "source_db_connection_info": {
+        "user_name": "myuser",
+        "host": "localhost",
+        "db_name": "mydb",
+        "port": 5432,
+        "password": "mypassword"
+    },
+    "destination_db_connection_info": {
+        "user_name": "myuser",
+        "host": "localhost",
+        "db_name": "mydb",
+        "port": 5433,
+        "password": "mypassword"
+    },
+    "keep_disconnected_tables": true,
+    "excluded_tables": [
+        "public.django_admin_log"
+    ],
+    "max_rows_per_table": 5000,
+    "passthrough_tables": [
+        "public.easy_thumbnails_source",
+        "public.easy_thumbnails_thumbnail",
+        "public.easy_thumbnails_thumbnaildimensions",
+        "public.log_histories",
+        "public.contact_us",
+        "public.user_login_activity",
+        "public.users_apiaccesstoken",
+        "public.city_image",
+        "public.traveler_review_image",
+        "public.lokafyer_feedback_image",
+        "public.health_check_db_testmodel",
+        "public.internal_transaction",
+        "public.lokafyer_city",
+        "public.request_token_requesttokenlog",
+        "public.lokafyer_payment_details",
+        "public.booking_lokafyer_relevancy",
+        "public.booking_lokafyer_response"
+    ],
+    "dependency_breaks": [
+        {
+            "fk_table": "public.booking_notes",
+            "target_table": "public.booking_notes"
+        },
+        {
+            "fk_table": "public.user_permission",
+            "target_table": "public.user_permission"
+        }
+    ],
+    "fk_augmentation": [],
+    "upstream_filters": [],
+    "pre_constraint_sql": [
+        "DELETE FROM city_image WHERE id IN (SELECT id FROM city_image GROUP BY id HAVING COUNT(*) > 1) AND ctid NOT IN (SELECT MIN(ctid) FROM city_image GROUP BY id HAVING COUNT(*) > 1)",
+        "DELETE FROM log_histories WHERE id IN (SELECT id FROM log_histories GROUP BY id HAVING COUNT(*) > 1) AND ctid NOT IN (SELECT MIN(ctid) FROM log_histories GROUP BY id HAVING COUNT(*) > 1)",
+        "DELETE FROM users_apiaccesstoken WHERE id IN (SELECT id FROM users_apiaccesstoken GROUP BY id HAVING COUNT(*) > 1) AND ctid NOT IN (SELECT MIN(ctid) FROM users_apiaccesstoken GROUP BY id HAVING COUNT(*) > 1)",
+        "DELETE FROM users_apiaccesstoken WHERE name IN (SELECT name FROM users_apiaccesstoken GROUP BY name HAVING COUNT(*) > 1) AND ctid NOT IN (SELECT MIN(ctid) FROM users_apiaccesstoken GROUP BY name HAVING COUNT(*) > 1)",
+        "DELETE FROM users_apiaccesstoken WHERE token_id IN (SELECT token_id FROM users_apiaccesstoken GROUP BY token_id HAVING COUNT(*) > 1) AND ctid NOT IN (SELECT MIN(ctid) FROM users_apiaccesstoken GROUP BY token_id HAVING COUNT(*) > 1)",
+        "DELETE FROM booking_lokafyer_response WHERE booking_lokafyer_relevancy_id NOT IN (SELECT id FROM booking_lokafyer_relevancy)",
+        "DELETE FROM booking_lokafyer_relevancy WHERE booking_id NOT IN (SELECT id FROM booking)",
+        "DELETE FROM booking_lokafyer_relevancy WHERE lokafyer_id NOT IN (SELECT id FROM user_profile_lokafyer)",
+        "DELETE FROM booking_lokafyer_response WHERE booking_lokafyer_relevancy_id IS NULL",
+        "DELETE FROM booking_lokafyer_response WHERE booking_lokafyer_relevancy_id NOT IN (SELECT id FROM booking_lokafyer_relevancy WHERE id IS NOT NULL)",
+        "DELETE FROM request_token_requesttokenlog WHERE id IN (SELECT id FROM request_token_requesttokenlog GROUP BY id HAVING COUNT(*) > 1) AND ctid NOT IN (SELECT MIN(ctid) FROM request_token_requesttokenlog GROUP BY id HAVING COUNT(*) > 1)",
+        "DELETE FROM booking_lokafyer_relevancy WHERE id IN (SELECT id FROM booking_lokafyer_relevancy GROUP BY id HAVING COUNT(*) > 1) AND ctid NOT IN (SELECT MIN(ctid) FROM booking_lokafyer_relevancy GROUP BY id HAVING COUNT(*) > 1)",
+        "DELETE FROM booking_lokafyer_response WHERE id IN (SELECT id FROM booking_lokafyer_response GROUP BY id HAVING COUNT(*) > 1) AND ctid NOT IN (SELECT MIN(ctid) FROM booking_lokafyer_response GROUP BY id HAVING COUNT(*) > 1)",
+        "DELETE FROM booking_lokafyer_response WHERE uuid IN (SELECT uuid FROM booking_lokafyer_response GROUP BY uuid HAVING COUNT(*) > 1) AND ctid NOT IN (SELECT MIN(ctid) FROM booking_lokafyer_response GROUP BY uuid HAVING COUNT(*) > 1)",
+        "DELETE FROM internal_transaction WHERE id IN (SELECT id FROM internal_transaction GROUP BY id HAVING COUNT(*) > 1) AND ctid NOT IN (SELECT MIN(ctid) FROM internal_transaction GROUP BY id HAVING COUNT(*) > 1)",
+        "DELETE FROM lokafyer_feedback_image WHERE id IN (SELECT id FROM lokafyer_feedback_image GROUP BY id HAVING COUNT(*) > 1) AND ctid NOT IN (SELECT MIN(ctid) FROM lokafyer_feedback_image GROUP BY id HAVING COUNT(*) > 1)",
+        "DELETE FROM lokafyer_payment_details WHERE id IN (SELECT id FROM lokafyer_payment_details GROUP BY id HAVING COUNT(*) > 1) AND ctid NOT IN (SELECT MIN(ctid) FROM lokafyer_payment_details GROUP BY id HAVING COUNT(*) > 1)",
+        "DELETE FROM lokafyer_payment_details WHERE lokafyer_id IN (SELECT lokafyer_id FROM lokafyer_payment_details GROUP BY lokafyer_id HAVING COUNT(*) > 1) AND ctid NOT IN (SELECT MIN(ctid) FROM lokafyer_payment_details GROUP BY lokafyer_id HAVING COUNT(*) > 1)",
+        "DELETE FROM traveler_review_image WHERE id IN (SELECT id FROM traveler_review_image GROUP BY id HAVING COUNT(*) > 1) AND ctid NOT IN (SELECT MIN(ctid) FROM traveler_review_image GROUP BY id HAVING COUNT(*) > 1)",
+        "DELETE FROM \"user\" WHERE email IN (SELECT email FROM \"user\" GROUP BY email HAVING COUNT(*) > 1) AND ctid NOT IN (SELECT MIN(ctid) FROM \"user\" GROUP BY email HAVING COUNT(*) > 1)",
+        "DELETE FROM \"user\" WHERE username IN (SELECT username FROM \"user\" GROUP BY username HAVING COUNT(*) > 1) AND ctid NOT IN (SELECT MIN(ctid) FROM \"user\" GROUP BY username HAVING COUNT(*) > 1)"
+    ]
+}
